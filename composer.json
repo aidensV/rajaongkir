@@ -12,9 +12,7 @@
             "email": "agungjk.social@gmail.com"
         }
     ],
-    "require": {
-    	"illuminate/support": "~5"
-    },
+    "require": {},
     "autoload": {
     	"psr-4": {
     		"ArsoftModules\\Rajaongkir\\": "src/"
