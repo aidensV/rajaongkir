@@ -1,18 +1,36 @@
 <?php
 
-namespace Agungjk\Rajaongkir;
+namespace ArsoftModules\RajaOngkir;
 
-class RajaOngkir {
+use Exception;
+
+class RajaOngkir
+{
 	protected $endpoint;
 	protected $key;
-	private $error;
+	private $status = 'success', $data, $errorMessage;
+	public function getStatus()
+    {
+        return $this->status;
+    }
 
-	public function __construct(){
-		$this->endpoint = config('rajaongkir.end_point_api', 'http://rajaongkir.com/api/starter');
-		$this->key = config('rajaongkir.api_key');
-		$this->city = json_decode(file_get_contents(__DIR__ . '/config/city.json'));
-		$this->province = json_decode(file_get_contents(__DIR__ . '/config/province.json'));
-	}	
+    public function getData()
+    {
+        return $this->data;
+    }
+
+    public function getErrorMessage()
+    {
+        return $this->errorMessage;
+    }
+
+	public function __construct()
+	{
+		$this->endpoint = config('rajaongkir.end_point_api', 'https://api.rajaongkir.com/starter');
+		$this->key = 'ab9895942c72550cb9cf5e4852d36904';
+		// $this->city = json_decode(file_get_contents(__DIR__ . '/config/city.json'));
+		// $this->province = json_decode(file_get_contents(__DIR__ . '/config/province.json'));
+	}
 
 	private function _request($path, $options = null)
 	{
@@ -28,33 +46,35 @@ class RajaOngkir {
 			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
 			CURLOPT_CUSTOMREQUEST => "GET",
 			CURLOPT_HTTPHEADER => array(
-		    	"key: " . $this->key
+				"key: " . $this->key
 			),
 		);
-		$config = array_merge($config, $options);
+
+		$config = array_replace($config, $options);
 		curl_setopt_array($curl, $config);
 
 		$response = curl_exec($curl);
 		$err = curl_error($curl);
+
 		curl_close($curl);
 
 		if ($err) {
-			throw new Exception($err, 1);
+			echo "cURL Error #:" . $err;
+		} else {
+			 
 		}
 
-		if (! isset($response->rajaongkir)) {
-			$this->error = 'Response not valid';
-			return false;
+		$rajaongkir =json_decode($response)->rajaongkir;
+		
+		if ($rajaongkir->status->code == 400) {
+			$this->status = 'error';
+            $this->errorMessage = $rajaongkir->status->description;
+            return $this;
 		}
 
-		$rajaongkir = $response->rajaongkir;
-
-		if ( $rajaongkir->status->code == 400 ) {
-			$this->error = $rajaongkir->status->description;
-		}
-
-		if ( $rajaongkir->status->code == 200 ) {
-			return $rajaongkir->results;
+		if ($rajaongkir->status->code == 200) {
+			$this->data =  $rajaongkir->results;
+			return $this;
 		}
 	}
 
@@ -92,7 +112,7 @@ class RajaOngkir {
 				return $value;
 			}
 		}
-		
+
 		return null;
 	}
 
@@ -100,13 +120,12 @@ class RajaOngkir {
 	{
 		$options = [
 			CURLOPT_CUSTOMREQUEST => "POST",
-			CURLOPT_POSTFIELDS => "origin=". $origin ."&destination=". $destination ."&weight=". $weight ."&courier=". $courier,
+			CURLOPT_POSTFIELDS => "origin=" . $origin . "&destination=" . $destination . "&weight=" . $weight . "&courier=" . $courier,
 			CURLOPT_HTTPHEADER => array(
 				"content-type: application/x-www-form-urlencoded",
-		    	"key: " . self::key
+				"key: " . $this->key
 			),
 		];
 		return self::_request('/cost', $options);
 	}
-
 }

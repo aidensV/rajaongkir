@@ -1,6 +1,6 @@
 <?php
 
-namespace Agungjk\Rajaongkir;
+namespace ArsoftModules\RajaOngkir;
 
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;

@@ -8,14 +8,14 @@ Dengan pacakage ini anda dapat menggunakan API Raja Ongkir dengan mudah karena s
 ## Install Package Composer
 1. Otomatis Menggunakan Composer:
     ```sh
-    composer require agungjk/rajaongkir
+    composer require ArsoftModules/rajaongkir
     ```
 
 2. Tambahkan Manual ke **composer.json**:
     ```sh
     {
     	"require": {
-    		"agungjk/rajaongkir" : "dev-master"
+    		"ArsoftModules/rajaongkir" : "dev-master"
     	}
     }
     ```
@@ -25,7 +25,7 @@ Dengan pacakage ini anda dapat menggunakan API Raja Ongkir dengan mudah karena s
     'providers' => [
     	....
     	
-    	Agungjk\Rajaongkir\RajaOngkirServiceProvider::class,
+    	ArsoftModules\Rajaongkir\RajaOngkirServiceProvider::class,
     ]
     ```
 
@@ -34,7 +34,7 @@ Dengan pacakage ini anda dapat menggunakan API Raja Ongkir dengan mudah karena s
     'aliases' => [
     	....
     	
-    	'RajaOngkir' => Agungjk\Rajaongkir\RajaOngkirFacade::class,
+    	'RajaOngkir' => ArsoftModules\Rajaongkir\RajaOngkirFacade::class,
     ]
     ```
     

@@ -1,5 +1,5 @@
 {
-    "name": "agungjk/rajaongkir",
+    "name": "arsoft-modules/rajaongkir",
     "description": "Raja Ongkir API Wrapper for Laravel 5",
     "keywords": [
         "rajaongkir", "application programming interface", "laravel", "wrapper"
@@ -17,16 +17,16 @@
     },
     "autoload": {
     	"psr-4": {
-    		"Agungjk\\Rajaongkir\\": "src/"
+    		"ArsoftModules\\Rajaongkir\\": "src/"
     	}
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Agungjk\\Rajaongkir\\RajaOngkirServiceProvider"
+                "ArsoftModules\\Rajaongkir\\RajaOngkirServiceProvider"
             ],
             "aliases": {
-                "RajaOngkir": "Agungjk\\Rajaongkir\\RajaOngkirFacade"
+                "RajaOngkir": "ArsoftModules\\Rajaongkir\\RajaOngkirFacade"
             }
         }
     }
