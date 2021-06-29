@@ -27,7 +27,7 @@ class RajaOngkir
 	public function __construct()
 	{
 		$this->endpoint = config('rajaongkir.end_point_api', 'https://api.rajaongkir.com/starter');
-		$this->key = 'ab9895942c72550cb9cf5e4852d36904';
+		$this->key = config('rajaongkir.api_key');
 		// $this->city = json_decode(file_get_contents(__DIR__ . '/config/city.json'));
 		// $this->province = json_decode(file_get_contents(__DIR__ . '/config/province.json'));
 	}
